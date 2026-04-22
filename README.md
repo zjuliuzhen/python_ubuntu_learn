@@ -48,6 +48,28 @@ WSL 终端完全兼容以下常用命令 ：
 | **第一步** | **确认硬件虚拟化已启用** | 打开**任务管理器** (Ctrl+Shift+Esc) -> **性能** -> **CPU**，查看右下角“虚拟化”状态。<br>• **已启用**：万事大吉，直接进入第二步。<br>• **已禁用**：需要重启电脑，进入BIOS/UEFI开启。<br>• **不支持**：说明CPU太老旧，无法使用WSL 2。 |
 | **第二步** | **启用Windows功能** | 在PowerShell（管理员）中运行：<br>`dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`<br>`dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart`<br>**完成后务必重启电脑**，让功能生效。 |
 
+CPU 不支持虚拟化可以使用WSL 1：**WSL 1 完全可以正常使用，它对硬件虚拟化没有强制要求。**
+
+### 核心区别
+这是因为 WSL 1 和 WSL 2 的底层工作原理完全不同：
+*   **WSL 2**：本质是一个轻量级虚拟机，依赖 Hyper-V 架构，因此**必须**开启硬件虚拟化（Intel VT-x 或 AMD-V）。
+*   **WSL 1**：它只是一个“系统调用兼容层”，将 Linux 指令实时翻译给 Windows 内核，**不需要**虚拟机支持，因此可以在没有虚拟化功能的旧 CPU 上运行。
+
+### 安装方法
+因为 `wsl --install` 默认会装 WSL 2，你需要按以下步骤**手动指定安装 WSL 1**：
+
+1.  **启用功能**：以管理员身份打开 PowerShell，输入：
+    ```powershell
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    ```
+2.  **重启电脑**。
+3.  **下载并安装 Linux 发行版**：在 Microsoft Store 搜索 Ubuntu 等并安装。
+4.  **首次启动时**：它会自动开始安装，默认版本就是 WSL 1（因为未开启虚拟机平台）。
+
+### 功能限制与影响
+*   **潜在优势**：WSL 1 访问 Windows 磁盘文件的性能反而比 WSL 2 更好。
+*   **已知限制**：WSL 1 不支持 Docker（需虚拟化）、GUI 图形界面和 Snap 等依赖完整内核的特性。
+
 ### ⚙️ 实操指南：如何在BIOS/UEFI中开启虚拟化
 
 如果任务管理器显示“虚拟化”为“已禁用”，可按以下方法操作：
