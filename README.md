@@ -117,3 +117,66 @@ WSL 终端完全兼容以下常用命令 ：
 
 2.  **`--max-depth` 的易错点**
     提醒学生这是两个短横线 `--`，且等于号紧挨着数字：`--max-depth=1`。如果写成 `-maxdepth 1`（单横线）是 BSD 风格的参数，在 Linux 原生环境下会报错。
+由于网络受限无法访问 GitHub 网页，且目标只是练习 `git push` / `git pull` 的本地操作手感，那**共享同一个私钥**具体的操作步骤如下：
+
+### 第一步：公共端准备
+
+1.  **生成一把“公用钥匙”**：
+    在你自己的电脑上执行以下命令（为了方便记忆，可以命名为 `class_key`）：
+    ```bash
+    ssh-keygen -t ed25519 -f ~/.ssh/class_key -C "class_shared_key"
+    ```
+    *执行过程中一路按回车即可，不要设置密码短语，否则学生每次 Push 都要输密码。*
+
+2.  **获取公钥并添加到 GitHub**：
+    -   查看公钥内容：`cat ~/.ssh/class_key.pub`
+    -   复制内容，打开 GitHub 网页（你需要用点手段或在自己网络环境下操作）。
+    -   进入 **Settings -> SSH and GPG keys -> New SSH Key**，粘贴并保存。
+
+3.  **将私钥文件打包发给学生**：
+    -   私钥文件在这里：`~/.ssh/class_key`（**注意是没有 .pub 后缀的那个**）。
+    -   你可以把它放到教室的 FTP 或共享文件夹里，让学生下载。
+
+### 第二步：个人端操作（指导学生在命令行执行）
+
+拿到 `class_key` 文件后，需要完成以下 3 步配置（假设使用 Windows 的 Git Bash 或 Mac/Linux 终端）：
+
+1.  **放置私钥文件**：
+    ```bash
+    # 假设 class_key 文件下载到了桌面上
+    mkdir -p ~/.ssh
+    cp ~/Desktop/class_key ~/.ssh/
+    chmod 600 ~/.ssh/class_key   # 修改权限，否则 Git 会报错说权限太开放
+    ```
+
+2.  **配置 SSH 客户端使用这把钥匙**：
+    创建或编辑 `~/.ssh/config` 文件（如果没有就新建一个）：
+    ```bash
+    # 在 Git Bash 或终端里粘贴以下内容
+    cat >> ~/.ssh/config << EOF
+    Host github.com
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/class_key
+        StrictHostKeyChecking no
+    EOF
+    ```
+    *最后一行是为了跳过初次连接时的 yes/no 确认，方便课堂流程。*
+
+3.  **测试连接**：
+    ```bash
+    ssh -T git@github.com
+    ```
+    看到 `Hi [你的用户名]! ... successfully authenticated` 即表示成功。
+
+### 第三步：回收权限
+
+请务必登录 GitHub，找到刚才添加的那条 SSH Key，点击 **Delete**。
+
+这样操作后，即使手里的 `class_key` 文件没删，也无法再访问你的 GitHub 仓库了。
+
+### ⚠️ 一个需要留意的提醒
+因为都在用**同一把锁**的身份（都是你的 GitHub 账号），Git 日志里的 Author 会显示成他们自己电脑上配置的 `git config user.name`。
+
+-   **这会导致一个问题**：如果有人故意把自己的 Git 用户名改成你的名字，然后 `push -f` 强制推送把仓库搞乱，你很难从日志里分辨出到底是谁干的。
+-   **应对建议**：可以口头上强调一下，**只允许 `push` 自己的文件，不要覆盖别人的文件**。作为临时的练习环境，通常不会有太大问题。
