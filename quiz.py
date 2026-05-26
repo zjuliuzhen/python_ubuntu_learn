@@ -1,7 +1,7 @@
 class Student:
     # 填空1：定义类变量name，初始值为"请输入姓名"
-    name = "请输入姓名"
-
+    name = ""
+    
     def __init__(self, scores):
         """
         初始化学生
