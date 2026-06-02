@@ -1,5 +1,5 @@
 class Student:
-    # 填空1：定义类变量name，初始值为"请输入姓名"
+    # 填空1：定义类变量name，初始值为"请输入姓名"，这里不要直接输入自己名字
          
 
     def __init__(self, scores):
