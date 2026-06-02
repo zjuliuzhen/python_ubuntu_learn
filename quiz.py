@@ -1,7 +1,7 @@
 class Student:
     # 填空1：定义类变量name，初始值为"请输入姓名"
          
-
+    name = "宋宇杰"
     def __init__(self, scores):
         """
         初始化学生
@@ -9,23 +9,23 @@ class Student:
         """
         # 填空2：将传入的scores赋值给self.scores
     
-
+        self.scores = scores
     def print_average(self):
         """
         计算并打印平均分
         """
         # 填空3：计算平均分，使用sum和len函数，并赋值给average
-        # average = 
-
+        average = sum(self.scores.values()) / len(self.scores.values())
         print(f"学生 {self.name} 的平均分是: {average:.2f}")
 
 
 # 主程序
 if __name__ == "__main__":
     # 填空4：创建成绩字典
-    
+    score_dict = {"语文":92,"数学":95}
     # 填空5：创建Student对象，传入成绩字典，选择三门或三门以上你最好的课程成绩
-    
+    stu = Student(score_dict)
     # 填空6：设置学生姓名，用你自己的真名
-    
+    stu.name = "宋宇杰"
     # 填空7：调用打印平均分的方法
+    stu.print_average()
