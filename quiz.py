@@ -29,6 +29,6 @@ if __name__ == "__main__":
     # 填空5：创建Student对象，传入成绩字典，选择三门或三门以上你最好的课程成绩
     student=Student(scores)
     # 填空6：设置学生姓名，用你自己的真名
-    student.name="zhangjunjie"
+    student.name="jinjianchang"
     # 填空7：调用打印平均分的方法
     student.print_average()
