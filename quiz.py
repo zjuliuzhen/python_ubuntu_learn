@@ -1,4 +1,4 @@
-class Student:
+iiclass Student:
     def __init__(self, name, scores):
         self.name = name
         self.scores = scores
@@ -9,6 +9,6 @@ class Student:
 
 if __name__ == "__main__":
     score_dict = {"语文": 85, "数学": 90, "英语": 78}
-    stu = Student("ls", score_dict)
+    stu = Student("liuchang", score_dict)
     stu.print_average()
 
