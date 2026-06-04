@@ -1,6 +1,6 @@
 class Student:
     # 填空1：定义类变量name，初始值为"请输入姓名"
-    name="qing"
+    name="chenzichuan"
 
     def __init__(self, scores):
         """
@@ -27,6 +27,6 @@ if __name__ == "__main__":
     # 填空5：创建Student对象，传入成绩字典，选择三门或三门以上你最好的课程成绩
     stu=Student(scores)
     # 填空6：设置学生姓名，用你自己的真名
-    stu.name="zhangchengtao"
+    stu.name="chenzichuan"
     # 填空7：调用打印平均分的方法
     stu.print_average()
