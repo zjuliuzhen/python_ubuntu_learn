@@ -1,6 +1,6 @@
 class Student:
     # 填空1：定义类变量name，初始值为"请输入姓名"
-    name="沈思语"         
+    name="苏雨堃"         
 
     def __init__(self, scores):
         """
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # 填空4：创建成绩字典
     score_dict={"语文":92,"数学":95,"英语":88,"Python":96}
     stu=Student(score_dict)
-    stu.name="沈思语"
+    stu.name="苏雨堃"
     stu.print_average()
     
     # 填空5：创建Student对象，传入成绩字典，选择三门或三门以上你最好的课程成绩
