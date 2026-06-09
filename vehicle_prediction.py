@@ -20,9 +20,9 @@ def vehicle_prediction(state, control, dt, L):
     #   L           - 车辆轴距
     # ============================================================
     
-    # x_next =
-    # y_next =
-    # theta_next =
+    x_next = x + v * np.____(theta) * dt
+    y_next = y + v * np.____(theta) * dt
+    theta_next = theta + (v / L) * np.____(delta) * dt
 
     return np.array([x_next, y_next, theta_next])
 
