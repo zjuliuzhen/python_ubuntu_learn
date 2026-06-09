@@ -23,7 +23,9 @@ def vehicle_prediction(state, control, dt, L):
     # x_next =
     # y_next =
     # theta_next =
-
+    x_next = x + v * np.cos(theta) * dt
+    y_next = y + v * np.sin(theta) * dt
+    theta_next = theta + (v / L) * np.tan(delta) * dt
     return np.array([x_next, y_next, theta_next])
 
 
