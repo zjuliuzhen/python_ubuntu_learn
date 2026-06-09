@@ -9,11 +9,13 @@ def vehicle_prediction(state, control, dt, L):
     x, y, theta = state
     v, delta = control
     
-    # ============================================================
-    # TODO: 请参考工单中的公式图片，补全以下三行代码
+
+    # TODO: 
     # ============================================================
     # 提示：使用 np.cos(), np.sin(), np.tan()
-    # 变量说明：
+    x_next = x + v * np.cos(theta) * dt
+    y_next = y + v * np.sin(theta) * dt
+    theta_next = theta + (v/L) * np.tan(delta) * dt
     #   x, y, theta - 当前状态（位置和航向角）
     #   v, delta    - 控制量（速度和前轮转角）
     #   dt          - 时间步长
