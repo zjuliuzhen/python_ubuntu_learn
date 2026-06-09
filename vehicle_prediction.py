@@ -20,10 +20,10 @@ def vehicle_prediction(state, control, dt, L):
     #   L           - 车辆轴距
     # ============================================================
     
-    x_next = None      # 请修改这一行
-    y_next = None      # 请修改这一行
-    theta_next = None  # 请修改这一行
-    
+    # x_next =
+    # y_next =
+    # theta_next =
+
     return np.array([x_next, y_next, theta_next])
 
 
