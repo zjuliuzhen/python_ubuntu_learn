@@ -1,32 +1,51 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def vehicle_prediction(state, control, dt, L):
     """
     根据当前状态和控制量，预测下一时刻的状态
     """
     x, y, theta = state
     v, delta = control
-    
-    # ============================================================
-    # TODO: 请参考工单中的公式图片，补全以下三行代码
-    # ============================================================
-    # 提示：使用 np.cos(), np.sin(), np.tan()
-    # 变量说明：
-    #   x, y, theta - 当前状态（位置和航向角）
-    #   v, delta    - 控制量（速度和前轮转角）
-    #   dt          - 时间步长
-    #   L           - 车辆轴距
-    # ============================================================
-    
-    # x_next =
-    # y_next =
-    # theta_next =
+
+    # ===================== 补全下面这三行 =====================
+    # 运动学自行车模型公式
+    x_next = x + v * np.cos(theta) * dt
+    y_next = y + v * np.sin(theta) * dt
+    theta_next = theta + (v / L) * np.tan(delta) * dt
+    # ==========================================================
 
     return np.array([x_next, y_next, theta_next])
 
+# ===================== 测试代码（不用改） =====================
+def run_test():
+    # 车辆参数
+    L = 2.8  # 轴距（米）
+    dt = 0.1  # 时间步长（秒）
+    
+    # 初始状态和控制
+    state = [0.0, 0.0, 0.0]  # x, y, 航向角
+    control = [5.0, 0.1]     # 速度5m/s，前轮转角0.1rad
+    
+    # 预测50步
+    trajectory = []
+    for _ in range(50):
+        trajectory.append(state[:2])
+        state = vehicle_prediction(state, control, dt, L)
+    trajectory.append(state[:2])
+    
+    # 绘制轨迹
+    trajectory = np.array(trajectory)
+    plt.plot(trajectory[:,0], trajectory[:,1], '-o')
+    plt.axis('equal')
+    plt.grid(True)
+    plt.title("Vehicle Trajectory Prediction")
+    plt.xlabel("X (m)")
+    plt.ylabel("Y (m)")
+    plt.show()
 
+if __name__ == "__main__":
+    run_test()
 # ============================================================
 # 测试代码（请不要修改下面的内容）
 # ============================================================
